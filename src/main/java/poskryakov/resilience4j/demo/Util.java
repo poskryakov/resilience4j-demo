@@ -3,7 +3,7 @@ package poskryakov.resilience4j.demo;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Utils {
+public class Util {
 
     public static final List<String> catchphrases = List.of(
             "I’ll be back. (The Terminator, and so many more)",

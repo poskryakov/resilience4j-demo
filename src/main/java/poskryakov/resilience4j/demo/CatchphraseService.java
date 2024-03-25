@@ -22,15 +22,15 @@ public class CatchphraseService {
 
     public String getCatchphraseFast() {
         // Response with random delay. Low response time.
-        Utils.sleepRandom(500, 1000);
-        int randomIndex = ThreadLocalRandom.current().nextInt(Utils.catchphrases.size());
-        return Utils.catchphrases.get(randomIndex);
+        Util.sleepRandom(500, 1000);
+        int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
+        return Util.catchphrases.get(randomIndex);
     }
 
     public String getCatchphraseRateSensitive() {
         // Fail if service is down. No delay.
         if (isDownNow()) {
-            Utils.sleepRandom(500, 1000);
+            Util.sleepRandom(500, 1000);
             throw new CatchphraseException("CatchphraseService: Too many requests");
         }
 
@@ -42,41 +42,41 @@ public class CatchphraseService {
         }
 
         // Response with random delay. Low response time.
-        Utils.sleepRandom(500, 1000);
-        int randomIndex = ThreadLocalRandom.current().nextInt(Utils.catchphrases.size());
-        return Utils.catchphrases.get(randomIndex);
+        Util.sleepRandom(500, 1000);
+        int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
+        return Util.catchphrases.get(randomIndex);
     }
 
     public String getCatchphraseRandomDowntime() {
         // Fail if service is down. No delay.
         if (isDownNow()) {
-            Utils.sleepRandom(500, 1000);
+            Util.sleepRandom(500, 1000);
             throw new CatchphraseException("CatchphraseService: Downtime");
         }
 
         // Start downtime randomly
-        if (!isDownNow() && Utils.rollDice(5, 100)) {
-            int downtimeDurationSeconds = ThreadLocalRandom.current().nextInt(5);
+        if (!isDownNow() && Util.rollDice(5, 100)) {
+            int downtimeDurationSeconds = 5 + ThreadLocalRandom.current().nextInt(5);
             downtimeEnd = LocalDateTime.now().plus(Duration.ofSeconds(downtimeDurationSeconds));
             throw new CatchphraseException("CatchphraseService: Downtime");
         }
 
         // Response with random delay. Low response time.
-        Utils.sleepRandom(500, 1000);
-        int randomIndex = ThreadLocalRandom.current().nextInt(Utils.catchphrases.size());
-        return Utils.catchphrases.get(randomIndex);
+        Util.sleepRandom(500, 1000);
+        int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
+        return Util.catchphrases.get(randomIndex);
     }
 
     public String getCatchphraseRandomFail() {
         // Fail randomly
-        if (Utils.rollDice(20, 100)) {
+        if (Util.rollDice(20, 100)) {
             throw new CatchphraseException("CatchphraseService: Fail");
         }
 
         // Response with random delay. Low response time.
-        Utils.sleepRandom(500, 1000);
-        int randomIndex = ThreadLocalRandom.current().nextInt(Utils.catchphrases.size());
-        return Utils.catchphrases.get(randomIndex);
+        Util.sleepRandom(500, 1000);
+        int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
+        return Util.catchphrases.get(randomIndex);
     }
 
     private static RateLimiter initInternalRateLimiter() {

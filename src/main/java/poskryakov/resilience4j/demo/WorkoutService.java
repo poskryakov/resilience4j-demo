@@ -9,8 +9,8 @@ public class WorkoutService {
 
     public String getWorkoutSlow() {
         // Response with random delay. High response time.
-        Utils.sleepRandom(5000, 10000);
-        int randomIndex = ThreadLocalRandom.current().nextInt(Utils.workouts.size());
-        return Utils.workouts.get(randomIndex);
+        Util.sleepRandom(7000, 10000);
+        int randomIndex = ThreadLocalRandom.current().nextInt(Util.workouts.size());
+        return Util.workouts.get(randomIndex);
     }
 }
