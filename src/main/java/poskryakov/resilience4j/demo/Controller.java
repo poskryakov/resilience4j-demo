@@ -54,7 +54,10 @@ public class Controller {
     public String getCatchphraseSlowWithBulkhead() {
         return Decorators.ofSupplier(catchphraseService::getCatchphraseSlow)
                 .withBulkhead(bulkhead)
-                .withFallback(List.of(BulkheadFullException.class), exception -> RESILIENCE4J_MESSAGE)
+                .withFallback(
+                        List.of(BulkheadFullException.class),
+                        exception -> RESILIENCE4J_MESSAGE
+                )
                 .get();
     }
 
@@ -77,7 +80,10 @@ public class Controller {
     public String getCatchphraseRateSensitiveWithRateLimiter() {
         return Decorators.ofSupplier(catchphraseService::getCatchphraseRateSensitive)
                 .withRateLimiter(rateLimiter)
-                .withFallback(List.of(RequestNotPermitted.class), exception -> RESILIENCE4J_MESSAGE)
+                .withFallback(
+                        List.of(RequestNotPermitted.class),
+                        exception -> RESILIENCE4J_MESSAGE
+                )
                 .get();
     }
 
@@ -101,7 +107,10 @@ public class Controller {
     public String getCatchphraseRandomDowntimeWithCircuitBreaker() {
         return Decorators.ofSupplier(catchphraseService::getCatchphraseRandomDowntime)
                 .withCircuitBreaker(circuitBreaker)
-                .withFallback(List.of(CallNotPermittedException.class), exception -> RESILIENCE4J_MESSAGE)
+                .withFallback(
+                        List.of(CallNotPermittedException.class),
+                        exception -> RESILIENCE4J_MESSAGE
+                )
                 .get();
     }
 
@@ -128,7 +137,10 @@ public class Controller {
     public String getCatchphraseRandomFail() {
         return Decorators.ofSupplier(catchphraseService::getCatchphraseRandomFail)
                 .withRetry(retry)
-                .withFallback(List.of(MaxRetriesExceededException.class), exception -> RESILIENCE4J_MESSAGE)
+                .withFallback(
+                        List.of(MaxRetriesExceededException.class),
+                        exception -> RESILIENCE4J_MESSAGE
+                )
                 .get();
     }
 
