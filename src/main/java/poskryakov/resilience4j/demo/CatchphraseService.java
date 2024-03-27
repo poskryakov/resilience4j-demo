@@ -19,13 +19,16 @@ public class CatchphraseService {
 
     private static LocalDateTime downtimeEnd = LocalDateTime.now();
 
+    // 1. Bulkhead
 
-    public String getCatchphraseFast() {
-        // Response with random delay. Low response time.
-        Util.sleepRandom(500, 1000);
+    public String getCatchphraseSlow() {
+        // Response with random delay. High response time.
+        Util.sleepRandom(7000, 10000);
         int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
         return Util.catchphrases.get(randomIndex);
     }
+
+    // 2. RateLimiter
 
     public String getCatchphraseRateSensitive() {
         // Fail if service is down. No delay.
@@ -47,6 +50,8 @@ public class CatchphraseService {
         return Util.catchphrases.get(randomIndex);
     }
 
+    // 3. CircuitBreaker
+
     public String getCatchphraseRandomDowntime() {
         // Fail if service is down. No delay.
         if (isDownNow()) {
@@ -66,6 +71,8 @@ public class CatchphraseService {
         int randomIndex = ThreadLocalRandom.current().nextInt(Util.catchphrases.size());
         return Util.catchphrases.get(randomIndex);
     }
+
+    // 4. Retry
 
     public String getCatchphraseRandomFail() {
         // Fail randomly

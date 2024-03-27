@@ -40,19 +40,19 @@ public class Controller {
 
     // 1. Bulkhead
 
-    @GetMapping("/catchphrase-fast")
+    @GetMapping("/catchphrase-slow")
     public String getCatchphraseFast() {
-        return catchphraseService.getCatchphraseFast();
+        return catchphraseService.getCatchphraseSlow();
     }
 
-    @GetMapping("/workout-slow")
-    public String getWorkoutSlow() {
-        return workoutService.getWorkoutSlow();
+    @GetMapping("/workout-fast")
+    public String getWorkoutFast() {
+        return workoutService.getWorkoutFast();
     }
 
-    @GetMapping("/workout-slow-with-bulkhead")
-    public String getWorkoutSlowWithBulkhead() {
-        return Decorators.ofSupplier(workoutService::getWorkoutSlow)
+    @GetMapping("/catchphrase-slow-with-bulkhead")
+    public String getCatchphraseSlowWithBulkhead() {
+        return Decorators.ofSupplier(catchphraseService::getCatchphraseSlow)
                 .withBulkhead(bulkhead)
                 .withFallback(List.of(BulkheadFullException.class), exception -> RESILIENCE4J_MESSAGE)
                 .get();
@@ -63,7 +63,7 @@ public class Controller {
                 .maxConcurrentCalls(10)
                 .maxWaitDuration(Duration.ofSeconds(2))
                 .build();
-        return Bulkhead.of("workout-slow", config);
+        return Bulkhead.of("catchphrase-slow", config);
     }
 
     // 2. RateLimiter
