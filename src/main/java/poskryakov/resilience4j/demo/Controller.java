@@ -148,7 +148,7 @@ public class Controller {
         RetryConfig config = RetryConfig.custom()
                 .retryExceptions(CatchphraseException.class)
                 .maxAttempts(3)
-                .intervalFunction(IntervalFunction.ofExponentialBackoff(1000, 2))
+                .intervalFunction(IntervalFunction.ofExponentialRandomBackoff(1000, 2))
                 .build();
         return Retry.of("catchphrase-random-fail", config);
     }
