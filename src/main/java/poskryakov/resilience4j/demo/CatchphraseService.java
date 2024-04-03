@@ -60,7 +60,7 @@ public class CatchphraseService {
         }
 
         // Start downtime randomly
-        if (!isDownNow() && Util.rollDice(5, 100)) {
+        if (!isDownNow() && Util.rollDice(3, 100)) {
             int downtimeDurationSeconds = 5 + ThreadLocalRandom.current().nextInt(5);
             downtimeEnd = LocalDateTime.now().plus(Duration.ofSeconds(downtimeDurationSeconds));
             throw new CatchphraseException("CatchphraseService: Downtime");

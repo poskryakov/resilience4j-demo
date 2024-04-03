@@ -121,7 +121,7 @@ public class Controller {
                 .slidingWindowSize(5)
                 .failureRateThreshold(80.0f)
                 .waitDurationInOpenState(Duration.ofSeconds(1))
-                .permittedNumberOfCallsInHalfOpenState(3)
+                .permittedNumberOfCallsInHalfOpenState(1)
                 .build();
         return CircuitBreaker.of("catchphrase-random-downtime", config);
     }
